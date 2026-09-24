@@ -1,0 +1,37 @@
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      POSTGRES_DB: ledgerly_dev
+      POSTGRES_USER: ledgerly
+      POSTGRES_PASSWORD: ledgerly_dev_password
+      POSTGRES_HOST: db          # <-- the service name, NOT localhost
+     
+
+  db:
+    image: postgres:16
+    container_name: ledgerly-postgres
+    environment:
+      POSTGRES_USER: ledgerly
+      POSTGRES_PASSWORD: ledgerly_dev_password
+      POSTGRES_DB: ledgerly_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ledgerly"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:

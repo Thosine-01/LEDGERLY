@@ -5,7 +5,14 @@ ALLOWED_HOSTS =[]
 
 
 DATABASES = {
-    "default": env.db("DATABASE_URL")  # required, no default
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": env("POSTGRES_DB"),  # required, no default
+        "USER": env("POSTGRES_USER"),
+        "PASSWORD": env("POSTGRES_PASSWORD"),
+        "HOST": env("POSTGRES_HOST"),
+        "PORT": env.int("POSTGRES_PORT", default=5432),  # default postgres port
+    }
 }
 
 
