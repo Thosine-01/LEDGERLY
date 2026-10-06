@@ -1,0 +1,52 @@
+Workflow for running Docker
+# Start of session
+docker-compose up -d
+
+# ... code, code, code, refresh browser, code ...
+
+# End of session
+
+
+# 1. Make sure Docker Desktop is running (open it from Start Menu, wait for "Engine running")
+
+# 2. Go to your project
+cd ~/OneDrive/Desktop/Projects/LEDGERLY
+
+# 3. Start containers
+docker-compose up -d
+
+# 4. Confirm both are up
+docker-compose ps
+
+docker-compose stop;
+
+
+making migrations
+# 1. Confirm .venv is active
+which python                      # must show .venv path
+
+# 2. Confirm Postgres is running
+docker ps | grep ledgerly-postgres  # must show (healthy)
+
+# 3. Generate the migration
+python manage.py makemigrations merchant
+
+# 4. Apply it
+python manage.py migrate
+
+# 5. Create a superuser
+python manage.py createsuperuser
+
+# 6. Verify tables in Postgres
+docker exec -it ledgerly-postgres psql -U ledgerly -d ledgerly_dev -c "\dt";
+
+
+
+
+Starting ledgerly;
+>>> docker compose up -d db
+>>> docker ps | grep ledgerly-postgres
+>>> source .venv/Scripts/activate
+>>> where python
+>>> python manage.py check
+>>> python manage.py runserver;

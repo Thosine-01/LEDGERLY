@@ -1,0 +1,82 @@
+Getting Started with Django
+python -m venv .venv  {creating a virtual environment}
+$ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+$ .venv\Scripts\Activate.ps1 {activating a virtual environment}
+(.venv) $ {result from the terminal}
+(.venv) $ python -m pip install django~=4.0.0 {installing django}
+(.venv) $ django-admin startproject django_project .{start the original project}
+(.venv) $ python manage.py migrate {run necessary migration}
+(.venv) $ python manage.py runserver {running server}
+
+// Theory of Docker
+Docker is more like a way of isolating an entire operating system via a linux container. very related to virtualization.
+
+-While some complex integration requires a virtual machine and its resources to run in an isolated environment, A continer which is a subset of a virtualmachine is suficient fr running web applications
+
+A container is a lightweight software package that runs an application and all its dependencies in an isolated environment. 
+Benefit: Developers with defferent operating system can run the application in their respective machine and still be sure it works fine with their respective dependencies since the application is running in an isolated environment that dont entirely depends on the peculiarities of their own machines.
+
+Virtual envisonment ie Venv can only isolate python packages and cannot isolate other packeages like Postgress, MYSQL etc. Container goes a bit further by isolating the entire operating system.
+
+Virtual machine -> House -stand-alone buildings with their own infrastructure including plumbing and heating, as well as compactments like kitchen, bathrooms, bedrooms,
+
+Docker Container -> Apartment -: -A flat in a building sharing common infrastructure like plumbing and heating, but come in various sizes that match the exact needs of an owner.
+
+Docker Images -> an image is the blueprint or set
+of plans for building an apartment; the container is the actual, fully-built apartment of a building.
+
+Steps for creating a docker images and container.
+• create a Dockerfile with custom image instructions
+• add a .dockerignore file
+• build the image >> docker build .
+• create a docker-compose.yml file {Now that the image is built, in order to run the container we need a list of instructions in a file called docker-compose.yml.}
+
+• spin up the container(s) >>docker-compose up
+ other notable instructions:
+ >>docker-compose down -> to stop container when not usig them.
+
+ >> docker-compose stop
+
+ // Theory on PostgresSQL
+ >>> do the normal Django setup
+ >>> first deactivate Venv
+ >>> create a docker image and build it
+ >>> start up the continer in detach mode
+ >>> add a new service called db to docker-compose.yml
+ >>> update the setting.py with the database specifics
+ >>> run $docker-compose up -d --build
+ >>> run migrations $docker-compose exec web python manage.py migrate
+ >>> create a supa user  $
+
+ 
+
+
+ steps to creating a custom user;
+Create the app
+bash
+>>>python manage.py startapp merchants
+
+
+Write merchants/models.py with Merchant and User.
+
+Write merchants/admin.py to register both in the admin.
+
+Edit Ledgerly/settings/base.py:
+
+Add "merchants" to INSTALLED_APPS
+
+Add AUTH_USER_MODEL = "merchants.User" at the bottom
+
+
+Create the migration
+bash
+>>>python manage.py makemigrations merchants
+
+
+Apply migrations
+
+
+
+
+
+

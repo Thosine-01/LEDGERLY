@@ -1,9 +1,9 @@
 # Pull base image
-FROM python:3.15.0rc2-slim-bookworm
+FROM python:3.14-slim
 
 # Set environmental variables
-ENV PIP_DISABLE_PIP_VERSION_CHECK 1
-ENV PYTHONDONTWRITEBYTECODE 1
+ENV PIP_DISABLE_PIP_VERSION_CHECK = 1
+ENV PYTHONDONTWRITEBYTECODE = 1
 ENV PYTHONUNBUFFERED=1
 
 # set working dirctory

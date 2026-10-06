@@ -9,11 +9,13 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    ###environment:
+     # ##POSTGRES_DB: ledgerly_dev
+      ##POSTGRES_USER: ledgerly
+      #POSTGRES_PASSWORD: ledgerly_dev_password
+      #POSTGRES_HOST: db
     environment:
-      POSTGRES_DB: ledgerly_dev
-      POSTGRES_USER: ledgerly
-      POSTGRES_PASSWORD: ledgerly_dev_password
-      POSTGRES_HOST: db          # <-- the service name, NOT localhost
+      DATABASE_URL: postgres://ledgerly:ledgerly_dev_password@db:5433/ledgerly_dev          # <-- the service name, NOT localhost
      
 
   db:
@@ -24,7 +26,7 @@ services:
       POSTGRES_PASSWORD: ledgerly_dev_password
       POSTGRES_DB: ledgerly_dev
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
